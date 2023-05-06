@@ -20,6 +20,7 @@ export default class question extends Model {
   user_id!: number
   title!: string
   content!: string
+  content_unique!: string
   created_at!: Date
   updated_at!: Date
 
@@ -46,6 +47,24 @@ export default class question extends Model {
         type: DataTypes.TEXT,
         allowNull: true,
         comment: '问题内容'
+      },
+      content_unique: {
+        type: DataTypes.STRING,
+        unique: 'question_content_unique_IDX',
+        allowNull: true,
+        comment: 'unique'
+      },
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        comment: '注册时间'
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        comment: '最后修改时间'
       }
     }, {
       sequelize,

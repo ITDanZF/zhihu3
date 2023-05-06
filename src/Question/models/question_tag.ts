@@ -14,7 +14,7 @@ export type question_tagId = question_tag[question_tagPk]
 export type question_tagOptionalAttributes = 'id' | 'created_at' | 'updated_at'
 export type question_tagCreationAttributes = Optional<question_tagAttributes, question_tagOptionalAttributes>
 
-export class question_tag extends Model {
+export default class question_tag extends Model {
   id!: number
   question_id!: number
   tag_id!: number
@@ -39,11 +39,23 @@ export class question_tag extends Model {
         type: DataTypes.INTEGER,
         allowNull: false,
         comment: '标签ID'
+      },
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        comment: '注册时间'
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        comment: '最后修改时间'
       }
     }, {
       sequelize,
       tableName: 'question_tag',
-      timestamps: true,
+      timestamps: false,
       indexes: [
         {
           name: 'PRIMARY',

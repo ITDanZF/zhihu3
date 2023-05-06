@@ -6,11 +6,14 @@ import router from './routes'
 import { ApiException } from './common/exception/api.exception'
 import HttpStatusCode from './common/constant/http-code.constants'
 import sequelize_User_Obj from './user/models'
+import sequelize_QS_Obj from './Question/models'
 import * as amqp from 'amqplib'
+import {globalInfoLogger} from "./common/logs/winston.log";
 
 const app = new Koa()
 app.context.orm = {
-  sequelize_User_Obj
+  sequelize_User_Obj,
+  sequelize_QS_Obj
 }
 app
   // exception catch
@@ -24,7 +27,8 @@ app
         code = e.errorCode ?? code
         message = e.errorMsg ?? message
       } else {
-        console.error('[Error]', e)
+        globalInfoLogger.error(e ?? message)
+        // console.error('[Error]', e)
       }
       ctx.status = code
       ctx.body = {
@@ -47,5 +51,6 @@ app
   .use(router.allowedMethods())
 
 app.listen(config.PORT, () => {
-  console.log(`Server running at port ${config.PORT}`)
+  globalInfoLogger.info(`Server running at port ${config.PORT}`)
+  // console.log(`Server running at port ${config.PORT}`)
 })

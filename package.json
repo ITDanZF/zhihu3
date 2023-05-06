@@ -60,7 +60,10 @@
     "koa-onerror": "^4.2.0",
     "lodash": "^4.17.21",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.25.7"
+    "sequelize": "^6.25.7",
+    "uuid": "^9.0.0",
+    "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1"
   },
   "pnpm": {
     "peerDependencyRules": {

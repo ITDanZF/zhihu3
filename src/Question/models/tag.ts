@@ -14,7 +14,7 @@ export type tagId = tag[tagPk]
 export type tagOptionalAttributes = 'id' | 'description' | 'created_at' | 'updated_at'
 export type tagCreationAttributes = Optional<tagAttributes, tagOptionalAttributes>
 
-export class tag extends Model {
+export default class tag extends Model {
   id!: number
   name!: string
   description?: string
@@ -40,11 +40,23 @@ export class tag extends Model {
         type: DataTypes.STRING(255),
         allowNull: true,
         comment: '标签描述'
+      },
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        comment: '注册时间'
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        comment: '最后修改时间'
       }
     }, {
       sequelize,
       tableName: 'tag',
-      timestamps: true,
+      timestamps: false,
       indexes: [
         {
           name: 'PRIMARY',
