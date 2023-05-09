@@ -32,12 +32,13 @@ export default class question_tag extends Model {
       },
       question_id: {
         type: DataTypes.INTEGER,
+        unique: 'question_tag_question_id_IDX',
         allowNull: false,
         comment: '问题ID'
       },
       tag_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         comment: '标签ID'
       },
       created_at: {

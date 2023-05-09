@@ -35,6 +35,7 @@ export default class question extends Model {
       },
       user_id: {
         type: DataTypes.INTEGER,
+        unique: 'question_user_id_IDX',
         allowNull: true,
         comment: '提问用户ID'
       },
@@ -50,9 +51,8 @@ export default class question extends Model {
       },
       content_unique: {
         type: DataTypes.STRING,
-        unique: 'question_content_unique_IDX',
         allowNull: true,
-        comment: 'unique'
+        comment: 'question_content_unique_IDX'
       },
       created_at: {
         type: DataTypes.DATE,

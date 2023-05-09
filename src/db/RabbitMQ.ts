@@ -2,15 +2,6 @@ import * as amqp from 'amqplib'
 import EventEmitter from 'events'
 import { config } from '../common/configuration/config'
 
-interface connectParams {
-  protocol: string
-  hostname: string
-  port: number
-  username: string
-  password: string
-
-}
-
 interface RabbitMQConnection {
   connection: amqp.Connection
   channel: amqp.Channel

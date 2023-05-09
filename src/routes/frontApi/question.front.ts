@@ -8,6 +8,6 @@ const router = new Router({
   prefix: '/QS'
 })
 
-router.post('/publishQS', tokenRequired, validateQSInfo, QSToQueueByPub, QSController.receiveQS)
-
+router.post('/publishQS', tokenRequired, validateQSInfo, QSController.receiveQS, QSToQueueByPub)
+router.get('/getQuestionById', tokenRequired, QSController.getQSByUSERID)
 export default router.routes()

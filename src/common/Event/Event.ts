@@ -1,8 +1,8 @@
 import EventEmitter from 'events'
 
-interface publicEvent extends EventEmitter {
-  on: (event: 'message', listener: (channel: string, message: number) => void) => this
-  once: (event: 'message', listener: (channel: string, message: number) => void) => this
+interface PublicEvent extends EventEmitter {
+  on: (event: 'message', listener: (channel: string, message: string) => void) => this
+  once: (event: 'message', listener: (channel: string, message: string) => void) => this
 
   onError: (event: 'error', cb: (error: Error) => void) => this
   onceError: (event: 'error', cb: (error: Error) => void) => this
@@ -11,4 +11,6 @@ interface publicEvent extends EventEmitter {
   onceReady: (event: 'ready', cb: (error: Error) => void) => this
 }
 
-export default new EventEmitter()
+const eventEmitter = new EventEmitter()
+
+export { PublicEvent, eventEmitter }

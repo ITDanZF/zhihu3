@@ -1,5 +1,8 @@
 import RabbitMQ from '../../db/RabbitMQ'
 import { globalInfoLogger } from '../../common/logs/winston.log'
+import { sequelize } from '../../db'
+import { ApiException } from '../../common/exception/api.exception'
+import HttpStatusCode from '../../common/constant/http-code.constants'
 
 RabbitMQ.on('ready', (msg: string) => {
   globalInfoLogger.info(msg)
@@ -45,18 +48,24 @@ class QueueForQS {
     await this.channel.publish(this.exChanel, '', Buffer.from(msg))
   }
 
-  setMessageHandler = (handler: (message: any) => Promise<void>) => {
+  subscribeMQ = (handler: (message: any) => Promise<void>) => {
     this.messageHandler = handler
+    this.subscribe()
   }
 
-  subscribe = async () => {
-    await this.channel.consume(this.queue.queue, async (msg: any) => {
+  subscribe = () => {
+    this.channel.prefetch(5) // 一次最多消费5条信息
+    this.channel.consume(this.queue.queue, async (msg: any) => {
       const content = JSON.parse(msg.content.toString())
+      // const transaction = await sequelize.transaction()
       try {
         await this.messageHandler(content)
+        // await transaction.commit()
         await this.channel.ack(msg) // 手动确认消息
-      } catch (err) {
+      } catch (err: any) {
         await this.channel.nack(msg, false, false) // 将消息重新放回队列中
+        globalInfoLogger.error(err.origin, err.parent)
+        // await transaction.rollback()
       }
     }, { noAck: false })
   }

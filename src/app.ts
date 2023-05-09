@@ -7,8 +7,8 @@ import { ApiException } from './common/exception/api.exception'
 import HttpStatusCode from './common/constant/http-code.constants'
 import sequelize_User_Obj from './user/models'
 import sequelize_QS_Obj from './Question/models'
-import * as amqp from 'amqplib'
-import {globalInfoLogger} from "./common/logs/winston.log";
+import './tasks/redisToRedis'
+import { globalInfoLogger } from './common/logs/winston.log'
 
 const app = new Koa()
 app.context.orm = {
