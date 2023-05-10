@@ -15,7 +15,7 @@ export type answerId = answer[answerPk]
 export type answerOptionalAttributes = 'id' | 'created_at' | 'updated_at'
 export type answerCreationAttributes = Optional<answerAttributes, answerOptionalAttributes>
 
-export class answer extends Model {
+export default class answer extends Model {
   id!: number
   user_id!: number
   question_id!: number

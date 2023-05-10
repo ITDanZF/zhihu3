@@ -1,4 +1,3 @@
-import { TokenUserInfo } from '../../user/dto/user.dto'
 import jwt, { sign } from 'jsonwebtoken'
 import SECRET_KEY from '../constant/secret-key.constants'
 

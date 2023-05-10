@@ -10,4 +10,5 @@ const router = new Router({
 
 router.post('/publishQS', tokenRequired, validateQSInfo, QSController.receiveQS, QSToQueueByPub)
 router.get('/getQuestionById', tokenRequired, QSController.getQSByUSERID)
+// router.get('/getQuestionByPage')
 export default router.routes()
