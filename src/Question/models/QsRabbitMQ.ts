@@ -57,15 +57,12 @@ class QueueForQS {
     this.channel.prefetch(5) // 一次最多消费5条信息
     this.channel.consume(this.queue.queue, async (msg: any) => {
       const content = JSON.parse(msg.content.toString())
-      // const transaction = await sequelize.transaction()
       try {
         await this.messageHandler(content)
-        // await transaction.commit()
         await this.channel.ack(msg) // 手动确认消息
       } catch (err: any) {
         await this.channel.nack(msg, false, false) // 将消息重新放回队列中
         globalInfoLogger.error(err.origin, err.parent)
-        // await transaction.rollback()
       }
     }, { noAck: false })
   }

@@ -1,6 +1,7 @@
 import QsRabbitMQPubObj from '../Question/models/QsRabbitMQ'
 import { Context, Next } from 'koa'
 import { PublicEvent, eventEmitter } from '../common/Event/Event'
+import { RedisKeyConstant } from '../common/constant/redis-key.constant'
 
 const myEventEmitter: PublicEvent = <PublicEvent>eventEmitter
 /**
@@ -13,6 +14,7 @@ const myEventEmitter: PublicEvent = <PublicEvent>eventEmitter
 export const QSToQueueByPub = async (ctx: Context, next: Next) => {
   await QsRabbitMQPubObj.publish({
     id: parseInt(ctx.userinfo.id),
-    md5: ctx.pubQs.md5
+    md5: ctx.pubQs.titleMd5
   })
+  myEventEmitter.emit('message', RedisKeyConstant.Redis_PUB, '')
 }

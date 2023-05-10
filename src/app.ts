@@ -8,6 +8,7 @@ import HttpStatusCode from './common/constant/http-code.constants'
 import sequelize_User_Obj from './user/models'
 import sequelize_QS_Obj from './Question/models'
 import './tasks/redisToRedis'
+import './Question/controller/MQ/index'
 import { globalInfoLogger } from './common/logs/winston.log'
 
 const app = new Koa()
