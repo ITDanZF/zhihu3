@@ -11,6 +11,11 @@ declare module 'koa' {
     pubQs: any,
 
     verifyPhone: any,
+
+    pubANS: any
+
+    GetByPage: any
+
     orm: Sequelize
   }
 }

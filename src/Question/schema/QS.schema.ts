@@ -8,3 +8,12 @@ export const QsSchema = Joi.object({
     description: Joi.string().optional()
   })).min(1).max(5).required()
 })
+
+export const GetQsSchema = Joi.object({
+  page: Joi.number().min(1),
+  limit: Joi.number().min(1),
+})
+
+export const pubANSSchema = Joi.object({
+  question_id: Joi.number().required(),
+})
