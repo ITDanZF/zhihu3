@@ -15,11 +15,12 @@ export type answerId = answer[answerPk]
 export type answerOptionalAttributes = 'id' | 'created_at' | 'updated_at'
 export type answerCreationAttributes = Optional<answerAttributes, answerOptionalAttributes>
 
-export default class answer extends Model {
+export class answer extends Model {
   id!: number
   user_id!: number
   question_id!: number
   content!: string
+  image_id?: string | null
   created_at!: Date
   updated_at!: Date
 
@@ -42,10 +43,27 @@ export default class answer extends Model {
         allowNull: false,
         comment: '回答所属问题ID'
       },
+      image_id: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        comment: '图片id'
+      },
       content: {
         type: DataTypes.TEXT,
         allowNull: false,
         comment: '回答内容'
+      },
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        comment: '注册时间'
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        comment: '最后修改时间'
       }
     }, {
       sequelize,
@@ -54,7 +72,7 @@ export default class answer extends Model {
       indexes: [
         {
           name: 'PRIMARY',
-          unique: true,
+          unique: false,
           using: 'BTREE',
           fields: [
             { name: 'id' },

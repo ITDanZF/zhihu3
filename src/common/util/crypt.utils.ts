@@ -1,6 +1,7 @@
 import crypto from 'crypto'
 import SECRET_KEY from '../constant/secret-key.constants'
-import bcrypt from 'bcrypt'
+import { string } from 'joi'
+import bcrypt from "bcrypt";
 
 function _md5 (content: string) {
   const md5 = crypto.createHash('md5')

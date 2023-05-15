@@ -7,16 +7,20 @@ import { ApiException } from './common/exception/api.exception'
 import HttpStatusCode from './common/constant/http-code.constants'
 import sequelize_User_Obj from './user/models'
 import sequelize_QS_Obj from './Question/models'
+import koaStatic from 'koa-static'
 import './tasks/redisToRedis'
 import './Question/controller/MQ/index'
 import { globalInfoLogger } from './common/logs/winston.log'
+import path from 'path'
 
 const app = new Koa()
 app.context.orm = {
   sequelize_User_Obj,
   sequelize_QS_Obj
 }
+
 app
+  .use(koaStatic(path.join(__dirname, '../public')))
   // exception catch
   .use(async (ctx: Koa.Context, next: Koa.Next) => {
     try {
@@ -28,8 +32,8 @@ app
         code = e.errorCode ?? code
         message = e.errorMsg ?? message
       } else {
-        globalInfoLogger.error(e ?? message)
-        // console.error('[Error]', e)
+        // globalInfoLogger.error( message)
+        console.error('[Error]', e)
       }
       ctx.status = code
       ctx.body = {

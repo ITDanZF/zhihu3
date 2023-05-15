@@ -8,14 +8,11 @@ declare module 'koa' {
     loginUsersInfo: any,
     registerUsersInfo: any,
 
+    pubANS: any
+
     pubQs: any,
 
     verifyPhone: any,
-
-    pubANS: any
-
-    GetByPage: any
-
     orm: Sequelize
   }
 }

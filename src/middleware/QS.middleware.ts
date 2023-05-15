@@ -1,7 +1,7 @@
 import { Context, Next } from 'koa'
 import HttpStatusCode from '../common/constant/http-code.constants'
 import { ApiException } from '../common/exception/api.exception'
-import { GetQsSchema, pubANSSchema, QsSchema } from '../Question/schema/QS.schema'
+import { ANSSchema, QsSchema } from '../Question/schema/QS.schema'
 
 /**
  * 验证发布问题的信息
@@ -28,44 +28,28 @@ export const validateQSInfo = async (ctx: Context, next: Next) => {
 }
 
 /**
- * 验证分页查询的信息
- * @param ctx
+ * 验证发布答案的信息
+ * @param Ctx
  * @param next
  */
-export const validateGetQS = async (ctx: Context, next: Next) => {
-  const { page, limit } = ctx.query
-  try {
-    await GetQsSchema.validateAsync({
-      page, limit
-    })
-  } catch (e: any) {
-    throw new ApiException(HttpStatusCode.BAD_REQUEST, e.message)
-  }
-  ctx.GetByPage = {
-    page: parseInt(page as string, 10) || 1,
-    limit: parseInt(limit as string, 10) || 5
+export const validateANSInfo = async (ctx: Context, next: Next) => {
+  const { question_id, content } = ctx.request.body as {
+    question_id: number
+    content: string
   }
 
-  await next()
-}
-/**
- * 发布答案校验
- * @param ctx
- * @param next
- */
-export const validatePubANS = async (ctx: Context, next: Next) => {
-  const { question_id, content } = ctx.request.body as { question_id: number, content: string }
   try {
-    await pubANSSchema.validateAsync({
-      question_id
+    await ANSSchema.validateAsync({
+      question_id, content
     })
   } catch (e: any) {
     throw new ApiException(HttpStatusCode.BAD_REQUEST, e.message)
   }
+
   ctx.pubANS = {
-    question_id,
+    user_id: parseInt(ctx.userinfo.id),
+    question_id: parseInt(String(question_id)),
     content
   }
-
   await next()
 }
